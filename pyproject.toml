@@ -10,7 +10,7 @@ packages = [
 
 [tool.poetry.scripts]
 aoc = "py_aoc.main:main"
-#aoc-1 = "py_aoc.day1:main"
+aoc-2022-1 = "py_aoc.y2022.day1:main"
 
 [tool.poetry.dependencies]
 python = "^3.11"
