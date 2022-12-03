@@ -1,0 +1,65 @@
+[tool.poetry]
+name = "py-aoc"
+version = "0.1.0"
+description = ""
+authors = ["Justin Wood <Callek@gmail.com>"]
+
+packages = [
+  { include = "py_aoc", from = "pysrc" }
+]
+
+[tool.poetry.scripts]
+aoc = "py_aoc.main:main"
+#aoc-1 = "py_aoc.day1:main"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.15.7"
+black = "^22.10.0"
+mypy = "^0.991"
+pytest = "^7.2.0"
+tox = "^3.27.1"
+# Wrapt needed for pylint, via astroid
+# for some reason poetry isn't installing
+# it otherwise, not digging in right now
+wrapt = ">=1.14,<2"
+
+[build-system]
+requires = ["poetry-core>=1.1.0"]
+build-backend = "poetry.core.masonry.api"
+
+# Pylint
+[tool.pylint.main]
+jobs = 0
+
+[tool.pylint.design]
+max-args = 7
+
+[tool.pylint.format]
+max-line-length = "88"
+
+[tool.pylint.logging]
+logging-format-style = "new"
+
+[tool.pylint."messages control"]
+disable = [
+  "logging-fstring-interpolation",
+  "logging-format-interpolation",
+  "logging-not-lazy",
+  "line-too-long",
+  "ungrouped-imports",
+  "typecheck",
+  "wrong-import-order",
+  "wrong-import-position",
+  "inconsistent-mro",
+  "consider-using-f-string",
+  "unspecified-encoding",
+]
+
+[tool.pylint.reports]
+output-format = "colorized"
+
+[tool.pylint.similarities]
+min-similarity-lines = 10
