@@ -22,9 +22,19 @@ def part1(data: list[list[int]]) -> int:
     return max(sum(elf) for elf in data)
 
 
+def part2(data: list[list[int]]) -> int:
+    """Part 2
+
+    Sort the sums of all elf food and return the sum of the top 3
+    """
+    sorted_calories = sorted(sum(elf) for elf in data)
+    return sum(sorted_calories[-3:])
+
+
 def main() -> None:
     """Main Logic"""
 
     raw_data = Path(inputfile).read_text()
     data = parse_to_list_of_list_of_ints(raw_data)
     print(f"{__doc__} - Part 1: {part1(data)}")
+    print(f"{__doc__} - Part 2: {part2(data)}")

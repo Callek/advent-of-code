@@ -30,7 +30,13 @@ def test_parser() -> None:
     assert expected == day1.parse_to_list_of_list_of_ints(EXAMPLE_DATA)
 
 
-def test_part_1() -> None:
+def test_part1() -> None:
     """Testing Day 1 - Part 1 Example"""
     data = day1.parse_to_list_of_list_of_ints(EXAMPLE_DATA)
     assert 24000 == day1.part1(data)
+
+
+def test_part2() -> None:
+    """Testing Day 2 - Part 2 Example"""
+    data = day1.parse_to_list_of_list_of_ints(EXAMPLE_DATA)
+    assert 45000 == day1.part2(data)
