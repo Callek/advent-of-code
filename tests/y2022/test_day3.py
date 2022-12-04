@@ -36,3 +36,9 @@ def test_part1() -> None:
     """Test part1"""
     sacks = day3.parse_rucksacks(EXAMPLE_DATA)
     assert 157 == day3.part1(sacks)
+
+
+def test_part2() -> None:
+    """Test part1"""
+    sacks = day3.parse_rucksacks(EXAMPLE_DATA)
+    assert 70 == day3.part2(sacks)

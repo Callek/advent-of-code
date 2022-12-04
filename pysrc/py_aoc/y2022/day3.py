@@ -53,9 +53,26 @@ def part1(sacks: list[str]) -> int:
     return all_priorities_sum
 
 
+def part2(sacks: list[str]) -> int:
+    """Solves for part 2
+
+    - takes the sacks from elves in groups of 3
+    - finds the common component
+    - returns the priority of all components
+    """
+    all_priorities_sum = 0
+    for i in range(0, len(sacks), 3):
+        comp_a, comp_b, comp_c = sacks[i : i + 3]
+        badge = set(comp_a) & set(comp_b) & set(comp_c)
+        assert len(badge) == 1
+        all_priorities_sum += get_item_prio(badge.pop())
+    return all_priorities_sum
+
+
 def main() -> None:
     """Main Logic"""
 
     raw_data = Path(inputfile).read_text()
     sacks = parse_rucksacks(raw_data)
     print(f"{__doc__} - Part 1: {part1(sacks)}")
+    print(f"{__doc__} - Part 2: {part2(sacks)}")
