@@ -14,3 +14,9 @@ def test_part1() -> None:
     """Test part1"""
     assignments = day4.parse_assignments(EXAMPLE_DATA)
     assert 2 == day4.part1(assignments)
+
+
+def test_part2() -> None:
+    """Test part2"""
+    assignments = day4.parse_assignments(EXAMPLE_DATA)
+    assert 4 == day4.part2(assignments)

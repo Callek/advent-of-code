@@ -21,6 +21,14 @@ def any_overlap(elf_a_range: set[range], elf_b_range: set[range]) -> bool:
     return False
 
 
+def some_overlap(elf_a_range: set[range], elf_b_range: set[range]) -> bool:
+    """Test if there is any overlap between the two ranges"""
+    if elf_a_range.isdisjoint(elf_b_range):
+        # No overlap
+        return False
+    return True
+
+
 def check_elf_assignments(
     assignments: list[str], checker: Callable[[set[range], set[range]], bool]
 ) -> int:
@@ -60,9 +68,21 @@ def part1(assignments: list[str]) -> int:
     )
 
 
+def part2(assignments: list[str]) -> int:
+    """Part 2
+
+    number of times an elf in an assigment has any duplicating work.
+    """
+    return check_elf_assignments(
+        assignments,
+        some_overlap,
+    )
+
+
 def main() -> None:
     """Main Logic"""
 
     raw_data = Path(inputfile).read_text()
     assignments = parse_assignments(raw_data)
     print(f"{__doc__} - Part 1: {part1(assignments)}")
+    print(f"{__doc__} - Part 2: {part2(assignments)}")
