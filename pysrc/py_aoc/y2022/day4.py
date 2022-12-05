@@ -2,6 +2,7 @@
 import os
 import re
 from pathlib import Path
+from typing import Callable
 
 inputfile = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "../../../2022/days/4/input.txt")
@@ -13,13 +14,22 @@ def parse_assignments(data: str) -> list[str]:
     return data.strip().split("\n")
 
 
-def part1(assignments: list[str]) -> int:
-    """Part 1
+def any_overlap(elf_a_range: set[range], elf_b_range: set[range]) -> bool:
+    """Test if any of the two ranges overlap"""
+    if elf_a_range.issuperset(elf_b_range) or elf_a_range.issubset(elf_b_range):
+        return True
+    return False
+
+
+def check_elf_assignments(
+    assignments: list[str], checker: Callable[[set[range], set[range]], bool]
+) -> int:
+    """Find count of assignments that match a given check
 
     - Split the assignments by elf A and elf B
-    - Generate a range of int's convert to set
-    - identify if elf A is a superset
-    - return ranges where there is a full overlap
+    - Generate a range of int's converted to set
+    - Run through checker function to see if we should count the assignment
+    - return ranges where checker was true
 
     Note: max is inclusive
     """
@@ -33,10 +43,21 @@ def part1(assignments: list[str]) -> int:
         elf_b_range = set(
             range(int(match.group("b_min")), int(match.group("b_max")) + 1)
         )
-        if elf_a_range.issuperset(elf_b_range) or elf_a_range.issubset(elf_b_range):
+        if checker(elf_a_range, elf_b_range):
             overlapped += 1
 
     return overlapped
+
+
+def part1(assignments: list[str]) -> int:
+    """Part 1
+
+    number of times an elf in an assigment is fully duplicating work.
+    """
+    return check_elf_assignments(
+        assignments,
+        any_overlap,
+    )
 
 
 def main() -> None:
