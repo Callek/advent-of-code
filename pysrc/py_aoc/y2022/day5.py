@@ -45,7 +45,9 @@ def parse_data(data: str) -> tuple[list[str], tuple[int, int, int]]:
     return crates_start, directions
 
 
-def move_crates(orig_stack: list[str], directions: tuple[int, int, int]) -> list[str]:
+def move_crates(
+    orig_stack: list[str], directions: tuple[int, int, int], many: bool = False
+) -> list[str]:
     """Move crates
 
     move X from Y to Z
@@ -60,8 +62,12 @@ def move_crates(orig_stack: list[str], directions: tuple[int, int, int]) -> list
         move_to = direction[2] - 1  # stacks are 0 indexed
         stack_moving = stack[move_from][:move_num]
         stack[move_from] = stack[move_from][move_num:]
-        # Prepend to stack since these are newest, and reverse since we move one at a time.
-        stack[move_to] = stack_moving[::-1] + stack[move_to]
+        if many:
+            # Prepend to stack since these are newest
+            stack[move_to] = stack_moving + stack[move_to]
+        else:
+            # ..., and reverse since we move one at a time.
+            stack[move_to] = stack_moving[::-1] + stack[move_to]
     return stack
 
 
@@ -75,9 +81,20 @@ def part1(start: list[str], directions: tuple[int, int, int]) -> int:
     return answer
 
 
+def part2(start: list[str], directions: tuple[int, int, int]) -> int:
+    """Part 2
+
+    move X from Y to Z - many at a time.
+    """
+    stack = move_crates(start, directions, many=True)
+    answer = "".join([s[0] for s in stack])
+    return answer
+
+
 def main() -> None:
     """Main Logic"""
 
     raw_data = Path(inputfile).read_text()
     start, directions = parse_data(raw_data)
     print(f"{__doc__} - Part 1: {part1(start, directions)}")
+    print(f"{__doc__} - Part 2: {part2(start, directions)}")

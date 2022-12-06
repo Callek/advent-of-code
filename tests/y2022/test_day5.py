@@ -31,3 +31,9 @@ def test_part1() -> None:
     """Test part1"""
     start, directions = day5.parse_data(EXAMPLE_DATA)
     assert "CMZ" == day5.part1(start, directions)
+
+
+def test_part2() -> None:
+    """Test part2"""
+    start, directions = day5.parse_data(EXAMPLE_DATA)
+    assert "MCD" == day5.part2(start, directions)
