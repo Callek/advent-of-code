@@ -14,6 +14,7 @@ aoc-2022-1 = "py_aoc.y2022.day1:main"
 aoc-2022-2 = "py_aoc.y2022.day2:main"
 aoc-2022-3 = "py_aoc.y2022.day3:main"
 aoc-2022-4 = "py_aoc.y2022.day4:main"
+aoc-2022-5 = "py_aoc.y2022.day5:main"
 
 [tool.poetry.dependencies]
 python = "^3.11"
