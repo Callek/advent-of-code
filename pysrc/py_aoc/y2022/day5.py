@@ -45,12 +45,15 @@ def parse_data(data: str) -> tuple[list[str], tuple[int, int, int]]:
     return crates_start, directions
 
 
-def part1(start: list[str], directions: tuple[int, int, int]) -> int:
-    """Part 1
+def move_crates(orig_stack: list[str], directions: tuple[int, int, int]) -> list[str]:
+    """Move crates
 
-    move X from Y to Z - one at a time.
+    move X from Y to Z
+    use the `many` boolean to indicate the crates move one at a time or many at once.
+
+    Note: This function does not mutate `orig_stack`
     """
-    stack = start[:]
+    stack = orig_stack[:]
     for direction in directions:
         move_num = direction[0]
         move_from = direction[1] - 1  # stacks are 0 indexed
@@ -59,6 +62,15 @@ def part1(start: list[str], directions: tuple[int, int, int]) -> int:
         stack[move_from] = stack[move_from][move_num:]
         # Prepend to stack since these are newest, and reverse since we move one at a time.
         stack[move_to] = stack_moving[::-1] + stack[move_to]
+    return stack
+
+
+def part1(start: list[str], directions: tuple[int, int, int]) -> int:
+    """Part 1
+
+    move X from Y to Z - one at a time.
+    """
+    stack = move_crates(start, directions)
     answer = "".join([s[0] for s in stack])
     return answer
 
