@@ -1,9 +1,107 @@
 ---
-name: CI
-on:
-    pull_request:
-        types: ["opened", "reopened", "synchronize"]
-    push:
-        branches:
-            - main
+name: 'CI'
+'on':  # c.f. https://github.com/adrienverge/yamllint/issues/430
+  pull_request:
+    types: ["opened", "reopened", "synchronize"]
+  push:
+    branches:
+      - 'main'
 jobs:
+  Lint:
+    name: Lints
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Configure Job Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry/cache
+            ~/.poetry
+          # Including the hashed poetry.lock in the cache slug ensures that the cache
+          # will be invalidated, and thus all packages will be redownloaded, if the
+          # lockfile is updated
+          key: ${{ runner.os }}-lint-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Configure Path
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Configure Environment
+        run: .github/scripts/setup-poetry.sh
+
+      - name: Black
+        run: poetry run black tests pysrc
+
+      - name: Pylint
+        run: poetry run pylint tests pysrc
+
+  Typing:
+    name: Python Type Check
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Configure Job Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry/cache
+            ~/.poetry
+          # Including the hashed poetry.lock in the cache slug ensures that the cache
+          # will be invalidated, and thus all packages will be redownloaded, if the
+          # lockfile is updated
+          key: ${{ runner.os }}-typing-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Configure Path
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Configure Environment
+        run: .github/scripts/setup-poetry.sh
+
+  Test:
+    name: Python Pytest
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Configure Job Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry/cache
+            ~/.poetry
+          # Including the hashed poetry.lock in the cache slug ensures that the cache
+          # will be invalidated, and thus all packages will be redownloaded, if the
+          # lockfile is updated
+          key: ${{ runner.os }}-pytest-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Configure Path
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Configure Environment
+        run: .github/scripts/setup-poetry.sh
+
+      - name: Run Tests
+        run: poetry run pytest
