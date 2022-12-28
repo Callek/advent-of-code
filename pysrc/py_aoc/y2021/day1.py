@@ -4,7 +4,7 @@ import os
 from typing import List
 
 inputfile = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "../../../2022/days/1/input.txt")
+    os.path.join(os.path.dirname(__file__), "../../../2021/days/1/input.txt")
 )
 
 
