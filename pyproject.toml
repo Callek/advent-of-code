@@ -15,6 +15,7 @@ aoc-2021-1 = "py_aoc.y2021.day1:main"
 aoc-2021-2 = "py_aoc.y2021.day2:main"
 aoc-2021-3 = "py_aoc.y2021.day3:main"
 aoc-2021-4 = "py_aoc.y2021.day4:main"
+aoc-2021-5 = "py_aoc.y2021.day5:main"
 # 2022
 aoc-2022-1 = "py_aoc.y2022.day1:main"
 aoc-2022-2 = "py_aoc.y2022.day2:main"
