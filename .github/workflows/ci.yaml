@@ -7,8 +7,18 @@ name: 'CI'
     branches:
       - 'main'
 jobs:
-  Lint:
-    name: Lints
+  MarkdownLint:
+    name: Markdown Lint
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: MarkdownLint
+        uses: actionshub/markdownlint@main
+
+  LintPy:
+    name: Python Lints
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
