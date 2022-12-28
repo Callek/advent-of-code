@@ -73,6 +73,9 @@ jobs:
       - name: Configure Environment
         run: .github/scripts/setup-poetry.sh
 
+      - name: Mypy
+        run: poetry run mypy tests pysrc
+
   Test:
     name: Python Pytest
     runs-on: ubuntu-22.04
