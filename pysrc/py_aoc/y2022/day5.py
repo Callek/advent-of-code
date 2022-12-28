@@ -8,7 +8,7 @@ inputfile = os.path.abspath(
 )
 
 
-def parse_stack_start(stack_data: list[str]) -> list[str]:
+def parse_stack_start(stack_data: str) -> list[str]:
     """Parse Stack Data
 
     Returned as a list of strings, with *top* crate being first in the string
@@ -24,18 +24,21 @@ def parse_stack_start(stack_data: list[str]) -> list[str]:
     return crates_start
 
 
-def parse_directions(direction_data: list[str]) -> list[tuple[int, int, int]]:
+def parse_directions(direction_data: str) -> list[tuple[int, ...]]:
     """Parse direction data"""
 
     # move 1 from 2 to 1
     direction_re = re.compile(r"move (\d*) from (\d*) to (\d*)")
-    directions: tuple[int, int, int] = []
+    directions: list[tuple[int, ...]] = []
     for line in direction_data.splitlines():
-        directions.append(tuple(map(int, direction_re.fullmatch(line).groups())))
+        matched = direction_re.fullmatch(line)
+        if not matched:
+            raise Exception("Unexpected direction line format")
+        directions.append(tuple(map(int, matched.groups())))
     return directions
 
 
-def parse_data(data: str) -> tuple[list[str], tuple[int, int, int]]:
+def parse_data(data: str) -> tuple[list[str], list[tuple[int, ...]]]:
     """Parse out the starting crates, and the directions"""
     stuff = data.split("\n\n")
     assert len(stuff) == 2
@@ -46,7 +49,7 @@ def parse_data(data: str) -> tuple[list[str], tuple[int, int, int]]:
 
 
 def move_crates(
-    orig_stack: list[str], directions: tuple[int, int, int], many: bool = False
+    orig_stack: list[str], directions: list[tuple[int, ...]], many: bool = False
 ) -> list[str]:
     """Move crates
 
@@ -71,7 +74,7 @@ def move_crates(
     return stack
 
 
-def part1(start: list[str], directions: tuple[int, int, int]) -> int:
+def part1(start: list[str], directions: list[tuple[int, ...]]) -> str:
     """Part 1
 
     move X from Y to Z - one at a time.
@@ -81,7 +84,7 @@ def part1(start: list[str], directions: tuple[int, int, int]) -> int:
     return answer
 
 
-def part2(start: list[str], directions: tuple[int, int, int]) -> int:
+def part2(start: list[str], directions: list[tuple[int, ...]]) -> str:
     """Part 2
 
     move X from Y to Z - many at a time.
