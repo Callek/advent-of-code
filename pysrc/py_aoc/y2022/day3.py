@@ -25,7 +25,7 @@ def get_item_prio(item: str) -> int:
     return ord(item) - 38
 
 
-def rucksack_compartments(sack: str) -> list[str, str]:
+def rucksack_compartments(sack: str) -> list[str]:
     """Splits the rucksack contents into two compartments"""
     if len(sack) % 2:
         raise ValueError(
