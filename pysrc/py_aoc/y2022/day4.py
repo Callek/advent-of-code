@@ -14,14 +14,14 @@ def parse_assignments(data: str) -> list[str]:
     return data.strip().split("\n")
 
 
-def any_overlap(elf_a_range: set[range], elf_b_range: set[range]) -> bool:
+def any_overlap(elf_a_range: set[int], elf_b_range: set[int]) -> bool:
     """Test if any of the two ranges overlap"""
     if elf_a_range.issuperset(elf_b_range) or elf_a_range.issubset(elf_b_range):
         return True
     return False
 
 
-def some_overlap(elf_a_range: set[range], elf_b_range: set[range]) -> bool:
+def some_overlap(elf_a_range: set[int], elf_b_range: set[int]) -> bool:
     """Test if there is any overlap between the two ranges"""
     if elf_a_range.isdisjoint(elf_b_range):
         # No overlap
@@ -30,7 +30,7 @@ def some_overlap(elf_a_range: set[range], elf_b_range: set[range]) -> bool:
 
 
 def check_elf_assignments(
-    assignments: list[str], checker: Callable[[set[range], set[range]], bool]
+    assignments: list[str], checker: Callable[[set[int], set[int]], bool]
 ) -> int:
     """Find count of assignments that match a given check
 
@@ -45,6 +45,8 @@ def check_elf_assignments(
     overlapped = 0
     for cleaning_pair in assignments:
         match = pattern.fullmatch(cleaning_pair)
+        if not match:
+            raise Exception("Unexpected Assignments Format")
         elf_a_range = set(
             range(int(match.group("a_min")), int(match.group("a_max")) + 1)
         )
