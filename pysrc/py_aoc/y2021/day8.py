@@ -84,11 +84,9 @@ def get_display_data(data: str) -> List[Display]:
 def part1(displays: List[Display]) -> int:
     """Part 1"""
     total = sum(
-        [
-            display.output_raw.count(display.number_map[n])
-            for display in displays
-            for n in {1, 4, 7, 8}
-        ]
+        display.output_raw.count(display.number_map[n])
+        for display in displays
+        for n in (1, 4, 7, 8)
     )
     return total
 
