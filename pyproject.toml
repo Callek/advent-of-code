@@ -10,6 +10,7 @@ packages = [
 
 [tool.poetry.scripts]
 aoc = "py_aoc.main:main"
+aoc-2021-1 = "py_aoc.y2021.day1:main"
 aoc-2022-1 = "py_aoc.y2022.day1:main"
 aoc-2022-2 = "py_aoc.y2022.day2:main"
 aoc-2022-3 = "py_aoc.y2022.day3:main"
