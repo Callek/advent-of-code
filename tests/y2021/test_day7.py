@@ -1,4 +1,4 @@
-"""Tests for day 7"""
+"""2021 - Day 7"""
 from py_aoc.y2021 import day7
 
 
