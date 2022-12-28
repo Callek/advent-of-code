@@ -7,7 +7,7 @@ inputfile = os.path.abspath(
 )
 
 
-def parse_hand_plays(data: str) -> list[tuple[str, str]]:
+def parse_hand_plays(data: str) -> list[tuple[str, ...]]:
     """Parse plays in each hand
 
     A | X == Rock
@@ -24,7 +24,7 @@ def parse_hand_plays(data: str) -> list[tuple[str, str]]:
     return [tuple(hand.split(" ")) for hand in data.strip().split("\n")]
 
 
-def outcome_score(hand: tuple[str, str]) -> int:
+def outcome_score(hand: tuple[str, ...]) -> int:
     """Outcome Score for hand
 
     Lose = 0, Draw = 3, Win = 6"""
@@ -38,9 +38,10 @@ def outcome_score(hand: tuple[str, str]) -> int:
         case ("A", "Y") | ("B", "Z") | ("C", "X"):
             # Win
             return 6
+    raise NotImplementedError("Unexpected outcome for Roshambo")
 
 
-def outcome_score_part2(hand: tuple[str, str]) -> int:
+def outcome_score_part2(hand: tuple[str, ...]) -> int:
     """Outcome Score for hand - Part 2
 
     In this part the second letter is the outcome
@@ -55,9 +56,10 @@ def outcome_score_part2(hand: tuple[str, str]) -> int:
         case "Z":
             # Win
             return 6
+    raise NotImplementedError("Unexpected score")
 
 
-def played_score(hand: tuple[str, str]) -> int:
+def played_score(hand: tuple[str, ...]) -> int:
     """Score for the choice we play
 
     Rock = 1, Paper = 2, Scissors = 3
@@ -69,9 +71,10 @@ def played_score(hand: tuple[str, str]) -> int:
             return 2
         case "Z":
             return 3
+    raise NotImplementedError("Unexpected score")
 
 
-def played_score_part2(hand: tuple[str, str]) -> int:
+def played_score_part2(hand: tuple[str, ...]) -> int:
     """Returns the score for a specific hand, part2
 
     Score for choice we play:
@@ -89,9 +92,10 @@ def played_score_part2(hand: tuple[str, str]) -> int:
             return paper[hand[1]]
         case "C":
             return scissors[hand[1]]
+    raise NotImplementedError("Unexpected score")
 
 
-def hand_score(hand: tuple[str, str], do_part2=False) -> int:
+def hand_score(hand: tuple[str, ...], do_part2=False) -> int:
     """Calculate the score for a specific hand
 
     Played Score + Outcome Score
@@ -104,7 +108,7 @@ def hand_score(hand: tuple[str, str], do_part2=False) -> int:
     return played_score_fn(hand) + outcome_score_fn(hand)
 
 
-def part1(hands: list[tuple[str, str]]) -> int:
+def part1(hands: list[tuple[str, ...]]) -> int:
     """Part 1
 
     Total Score for all hands
@@ -112,7 +116,7 @@ def part1(hands: list[tuple[str, str]]) -> int:
     return sum(hand_score(hand) for hand in hands)
 
 
-def part2(hands: list[tuple[str, str]]) -> int:
+def part2(hands: list[tuple[str, ...]]) -> int:
     """Part 2
 
     Total Score for all hands, with our move based on win/lose/draw
