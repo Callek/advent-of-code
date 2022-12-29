@@ -21,3 +21,15 @@ from py_aoc.y2015 import day1
 def test_part1(instructions: str, expect: int) -> None:
     """Test Part 1"""
     assert expect == day1.part1(instructions)
+
+
+@pytest.mark.parametrize(
+    "instructions,expect",
+    (
+        (")", 1),
+        ("()())", 5),
+    ),
+)
+def test_part2(instructions: str, expect: int) -> None:
+    """Test Part 2"""
+    assert expect == day1.part2(instructions)
