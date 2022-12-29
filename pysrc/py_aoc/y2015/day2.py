@@ -58,6 +58,21 @@ def paper_for_present(box: BOX) -> int:
     return 2 * side_1 + 2 * side_2 + 2 * side_3 + extra
 
 
+def ribbon_for_present(box: BOX) -> int:
+    """Ribbon needed for this present
+
+    Bow = needs cubic volume of present
+    Perim = Smallest perimeter of any one side
+    Total = Bow + Perim
+    """
+    side_1_perim = 2 * box.w + 2 * box.h
+    side_2_perim = 2 * box.w + 2 * box.l
+    side_3_perim = 2 * box.h + 2 * box.l
+    perim = min(side_1_perim, side_2_perim, side_3_perim)
+    bow = box.w * box.h * box.l
+    return perim + bow
+
+
 def part1(boxes: list[BOX]) -> int:
     """Part 1
 
@@ -66,10 +81,18 @@ def part1(boxes: list[BOX]) -> int:
     return sum(paper_for_present(box) for box in boxes)
 
 
+def part2(boxes: list[BOX]) -> int:
+    """Part 2
+
+    Identify total amount of ribbon needed
+    """
+    return sum(ribbon_for_present(box) for box in boxes)
+
+
 def main() -> None:
     """Main Logic"""
 
     raw_data = Path(inputfile).read_text()
     boxes = parse_box_dimensions(raw_data)
     print(f"{__doc__} - Part 1: {part1(boxes)}")
-    # print(f"{__doc__} - Part 2: {part2(data)}")
+    print(f"{__doc__} - Part 2: {part2(boxes)}")
