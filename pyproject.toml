@@ -14,6 +14,7 @@ aoc = "py_aoc.main:main"
 aoc-2015-1 = "py_aoc.y2015.day1:main"
 aoc-2015-2 = "py_aoc.y2015.day2:main"
 aoc-2015-3 = "py_aoc.y2015.day3:main"
+aoc-2015-4 = "py_aoc.y2015.day4:main"
 # 2020
 aoc-2020-1 = "py_aoc.y2020.day1:main"
 aoc-2020-2 = "py_aoc.y2020.day2:main"
