@@ -26,3 +26,11 @@ def test_part1() -> None:
     data = day6.parse_list_of_string(TEST_DATA)
     commands = day6.parse_commands(data)
     assert 998996 == day6.part1(commands)
+
+
+def test_part2() -> None:
+    """Test Part 2"""
+
+    data = day6.parse_list_of_string(TEST_DATA)
+    commands = day6.parse_commands(data)
+    assert 1001996 == day6.part2(commands)
