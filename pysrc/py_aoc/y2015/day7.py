@@ -1,6 +1,7 @@
 """2015 - Day 7"""
 import os
 import re
+from copy import copy
 from dataclasses import dataclass
 from collections import deque
 from pathlib import Path
@@ -182,9 +183,17 @@ def get_arg(wires: dict[str, Instruction], arg: str | None) -> tuple[int | None,
     return ret, requeue
 
 
-def solve(instructions: list[Instruction], target: str | None = None) -> dict[str, int]:
+def solve(
+    instructions: list[Instruction],
+    target: str | None = None,
+    override: dict[str, Instruction] | None = None,
+) -> dict[str, int]:
     """Solve for specific wire"""
-    wires: dict[str, Instruction] = {instr.target_wire: instr for instr in instructions}
+    wires: dict[str, Instruction] = {
+        instr.target_wire: copy(instr) for instr in instructions
+    }
+    if override:
+        wires.update(override)
     queue = deque(wires.values())
     if target:
         queue = deque([wires[target]])
@@ -230,6 +239,13 @@ def part1(instructions: list[Instruction]) -> int:
     return solve(instructions, target="a")["a"]
 
 
+def part2(instructions: list[Instruction]) -> int:
+    """Part 2"""
+    first_pass_a = solve(instructions, target="a")["a"]
+    override = {"b": Instruction(target_wire="b", signal=first_pass_a, method="DIRECT")}
+    return solve(instructions, target="a", override=override)["a"]
+
+
 def main() -> None:
     """Main Logic"""
 
@@ -237,4 +253,4 @@ def main() -> None:
     data = parse_list_of_string(raw_data)
     instructions = parse_instructions(data)
     print(f"{__doc__} - Part 1: {part1(instructions)}")
-    # print(f"{__doc__} - Part 2: {part2(commands)}")
+    print(f"{__doc__} - Part 2: {part2(instructions)}")

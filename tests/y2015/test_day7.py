@@ -62,3 +62,16 @@ def test_solve_for() -> None:
         "x": 123,
         "y": 456,
     }
+
+
+def test_solve_for_override() -> None:
+    """Test Solve for with override"""
+    data = day7.parse_list_of_string(TEST_DATA)
+    commands = day7.parse_instructions(data)
+    round_one = day7.solve(commands, "g")["g"]
+    assert round_one == 114
+
+    override = {
+        "y": day7.Instruction(target_wire="y", signal=round_one, method="DIRECT")
+    }
+    assert day7.solve(commands, "g", override=override)["g"] == 28
