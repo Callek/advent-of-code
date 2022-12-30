@@ -52,7 +52,7 @@ NOT y -> i
 
 After it is run, these are the signals on the wires:
 
-```
+```text
 d: 72
 e: 507
 f: 492

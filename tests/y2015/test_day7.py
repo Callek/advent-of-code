@@ -10,6 +10,7 @@ y RSHIFT 2 -> g
 NOT x -> h
 NOT y -> i
 y -> j
+1 AND x -> k
 """
 
 
@@ -19,19 +20,26 @@ def test_parsing() -> None:
     commands = day7.parse_instructions(data)
 
     expected = [
-        day7.Instruction(target_wire="x", signal=123),
-        day7.Instruction(target_wire="y", signal=456),
-        day7.Instruction(target_wire="d", signal=-1, method="AND", depends=["x", "y"]),
-        day7.Instruction(target_wire="e", signal=-1, method="OR", depends=["x", "y"]),
+        day7.Instruction(target_wire="x", signal=-1, arg_one="123", method="DIRECT"),
+        day7.Instruction(target_wire="y", signal=-1, arg_one="456", method="DIRECT"),
         day7.Instruction(
-            target_wire="f", signal=-1, method="LSHIFT", depends=["x"], arg=2
+            target_wire="d", signal=-1, method="AND", arg_one="x", arg_two="y"
         ),
         day7.Instruction(
-            target_wire="g", signal=-1, method="RSHIFT", depends=["y"], arg=2
+            target_wire="e", signal=-1, method="OR", arg_one="x", arg_two="y"
         ),
-        day7.Instruction(target_wire="h", signal=-1, method="NOT", depends=["x"]),
-        day7.Instruction(target_wire="i", signal=-1, method="NOT", depends=["y"]),
-        day7.Instruction(target_wire="j", signal=-1, method="DIRECT", depends=["y"]),
+        day7.Instruction(
+            target_wire="f", signal=-1, method="LSHIFT", arg_one="x", arg_two="2"
+        ),
+        day7.Instruction(
+            target_wire="g", signal=-1, method="RSHIFT", arg_one="y", arg_two="2"
+        ),
+        day7.Instruction(target_wire="h", signal=-1, method="NOT", arg_two="x"),
+        day7.Instruction(target_wire="i", signal=-1, method="NOT", arg_two="y"),
+        day7.Instruction(target_wire="j", signal=-1, method="DIRECT", arg_one="y"),
+        day7.Instruction(
+            target_wire="k", signal=-1, method="AND", arg_one="1", arg_two="x"
+        ),
     ]
     assert expected == commands
 
@@ -50,6 +58,7 @@ def test_solve_for() -> None:
         "h": 65412,
         "i": 65079,
         "j": 456,
+        "k": 1,
         "x": 123,
         "y": 456,
     }
