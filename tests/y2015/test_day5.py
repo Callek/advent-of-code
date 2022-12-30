@@ -29,7 +29,7 @@ def test_vowel(string: str, expect: int) -> None:
     ),
 )
 def test_double_letter(string: str, expect: int) -> None:
-    """has three vowel"""
+    """has double letters"""
     assert expect == day5.has_double_letter(string)
 
 
@@ -43,12 +43,40 @@ def test_double_letter(string: str, expect: int) -> None:
     ),
 )
 def test_naughty(string: str, expect: int) -> None:
-    """has three vowel"""
+    """has naught letters"""
     assert expect == day5.no_naughty_string(string)
 
 
+@pytest.mark.parametrize(
+    "string,expect",
+    (
+        ("xyxy", True),
+        ("aabcdefgaa", True),
+        ("aaa", False),
+    ),
+)
+def test_paired(string: str, expect: int) -> None:
+    """has paired letter"""
+    assert expect == day5.has_paired_letters(string)
+
+
+@pytest.mark.parametrize(
+    "string,expect",
+    (
+        ("xyx", True),
+        ("abcdefeghi", True),
+        ("aaa", True),
+        ("abcdefg", False),
+        ("abcdaefg", False),
+    ),
+)
+def test_repeat(string: str, expect: int) -> None:
+    """has repeat letter"""
+    assert expect == day5.has_repeat_letter(string)
+
+
 def test_part1() -> None:
-    """has three vowel"""
+    """Part 1"""
     assert 2 == day5.part1(
         [
             "ugknbfddgicrmopn",
@@ -56,5 +84,17 @@ def test_part1() -> None:
             "jchzalrnumimnmhp",
             "haegwjzuvuyypxyu",
             "dvszwmarrgswjxmb",
+        ]
+    )
+
+
+def test_part2() -> None:
+    """Part 2"""
+    assert 2 == day5.part2(
+        [
+            "qjhvhtzxzqqjkmpb",
+            "xxyxx",
+            "uurcxstgmygtbstg",
+            "ieodomkazucvgmuy",
         ]
     )

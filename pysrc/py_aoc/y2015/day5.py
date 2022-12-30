@@ -9,6 +9,8 @@ inputfile = os.path.abspath(
 
 THREE_VOWEL_REGEX = re.compile(r"(?:[aeiou].*){3}")
 TWO_LETTER_REGEX = re.compile(r"(.)\1")
+TWO_LETTER_PT2_REGEX = re.compile(r"(..).*\1")
+REPEAT_LETTER_PT_REGEX = re.compile(r"(.).\1")
 
 
 def parse_list_of_string(data: str) -> list[str]:
@@ -32,11 +34,18 @@ def no_naughty_string(string: str) -> bool:
     return not any(naughty in string for naughty in naughty_list)
 
 
-def part1(strings: list[str]) -> int:
-    """Part 1
+def has_paired_letters(string: str) -> bool:
+    """Check if the string has at least one double letter"""
+    return bool(TWO_LETTER_PT2_REGEX.search(string))
 
-    Find a hash with 5 leading zeros
-    """
+
+def has_repeat_letter(string: str) -> bool:
+    """Check if the string has at least one double letter"""
+    return bool(REPEAT_LETTER_PT_REGEX.search(string))
+
+
+def part1(strings: list[str]) -> int:
+    """Part 1"""
     count = 0
     for string in strings:
         if all(
@@ -50,10 +59,24 @@ def part1(strings: list[str]) -> int:
     return count
 
 
+def part2(strings: list[str]) -> int:
+    """Part 2"""
+    count = 0
+    for string in strings:
+        if all(
+            (
+                has_paired_letters(string),
+                has_repeat_letter(string),
+            )
+        ):
+            count += 1
+    return count
+
+
 def main() -> None:
     """Main Logic"""
 
     raw_data = Path(inputfile).read_text()
     strings = parse_list_of_string(raw_data)
     print(f"{__doc__} - Part 1: {part1(strings)}")
-    # print(f"{__doc__} - Part 2: {part2(data)}")
+    print(f"{__doc__} - Part 2: {part2(strings)}")
