@@ -13,3 +13,10 @@ def test_part1() -> None:
 
     data = day8.parse_list_of_string(TEST_DATA)
     assert 12 == day8.part1(data)
+
+
+def test_part2() -> None:
+    """Test Part 2"""
+
+    data = day8.parse_list_of_string(TEST_DATA)
+    assert 19 == day8.part2(data)
