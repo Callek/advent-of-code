@@ -13,3 +13,10 @@ def test_part1() -> None:
     data = day9.parse_list_of_string(TEST_DATA)
     cities = day9.get_cities(data)
     assert 605 == day9.part1(cities)
+
+
+def test_part2() -> None:
+    """Test Part 2"""
+    data = day9.parse_list_of_string(TEST_DATA)
+    cities = day9.get_cities(data)
+    assert 982 == day9.part2(cities)

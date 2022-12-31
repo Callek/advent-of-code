@@ -41,9 +41,13 @@ def get_cities(data: list[str]) -> dict[str, CITY]:
     return cities
 
 
-def part1(cities: dict[str, CITY]) -> int:
-    """Part 1"""
-    min_distance = sys.maxsize
+def calc_distance(cities: dict[str, CITY], max_wanted=False) -> int:
+    """Calc the min/max distance"""
+    # Start with the opposite target
+    if max_wanted:
+        target_distance = 0
+    else:
+        target_distance = sys.maxsize
     for city_order in permutations(cities.values()):
         # Distance of this full permutation
         # city_order[:-1] -- the list without the last item (first arg)
@@ -56,8 +60,21 @@ def part1(cities: dict[str, CITY]) -> int:
                 city_order[1:],
             )
         )
-        min_distance = min(min_distance, dist)
-    return min_distance
+        if max_wanted:
+            target_distance = max(target_distance, dist)
+        else:
+            target_distance = min(target_distance, dist)
+    return target_distance
+
+
+def part1(cities: dict[str, CITY]) -> int:
+    """Part 1"""
+    return calc_distance(cities)
+
+
+def part2(cities: dict[str, CITY]) -> int:
+    """Part 1"""
+    return calc_distance(cities, max_wanted=True)
 
 
 def main() -> None:
@@ -67,4 +84,4 @@ def main() -> None:
     data = parse_list_of_string(raw_data)
     cities = get_cities(data)
     print(f"{__doc__} - Part 1: {part1(cities)}")
-    # print(f"{__doc__} - Part 2: {part2(data)}")
+    print(f"{__doc__} - Part 2: {part2(cities)}")
