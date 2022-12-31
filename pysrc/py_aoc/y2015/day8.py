@@ -1,4 +1,4 @@
-"""2015 - Day 6"""
+"""2015 - Day 8"""
 import os
 import codecs
 from pathlib import Path
