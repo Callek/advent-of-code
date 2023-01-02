@@ -29,9 +29,14 @@ def part1(num: str) -> int:
     return len(do_look_and_say(num.strip(), iterations=40))
 
 
+def part2(num: str) -> int:
+    """Part 2"""
+    return len(do_look_and_say(num.strip(), iterations=50))
+
+
 def main() -> None:
     """Main Logic"""
 
     raw_data = Path(inputfile).read_text()
     print(f"{__doc__} - Part 1: {part1(raw_data)}")
-    # print(f"{__doc__} - Part 2: {part2(cities)}")
+    print(f"{__doc__} - Part 2: {part2(raw_data)}")
