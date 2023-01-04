@@ -1,4 +1,4 @@
-"""2015 - Day 9"""
+"""2015 - Day 10"""
 from py_aoc.y2015 import day10
 
 TEST_DATA = "1"
