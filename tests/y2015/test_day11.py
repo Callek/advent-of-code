@@ -31,9 +31,11 @@ def test_bad_chars(password: str, valid: bool) -> None:
 
 
 @pytest.mark.parametrize(
-    ("password", "next_pw"), (("abcdefgh", "abcdffaa"), ("ghijklmn", "ghjaabcc"))
+    ("password", "next_pw", "two_pw"),
+    (("abcdefgh", "abcdffaa", "abcdffbb"), ("ghijklmn", "ghjaabcc", "ghjbbcdd")),
 )
-def test_part1(password: str, next_pw: str) -> None:
-    """Test Part 1"""
+def test_parts(password: str, next_pw: str, two_pw: str) -> None:
+    """Test Part 1 and 2"""
 
     assert next_pw == day11.part1(password)
+    assert two_pw == day11.part2(next_pw)

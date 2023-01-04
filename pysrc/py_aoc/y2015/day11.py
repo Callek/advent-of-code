@@ -69,9 +69,18 @@ def part1(password: str) -> str:
     return password_part1
 
 
+def part2(password: str) -> str:
+    """Part 1"""
+    password_part2 = next_password(password)
+    while not check_password(password_part2):
+        password_part2 = next_password(password_part2)
+    return password_part2
+
+
 def main() -> None:
     """Main Logic"""
 
     raw_data = Path(inputfile).read_text().strip()
-    print(f"{__doc__} - Part 1: {part1(raw_data)}")
-    # print(f"{__doc__} - Part 2: {part2(raw_data)}")
+    part1_pw = part1(raw_data)
+    print(f"{__doc__} - Part 1: {part1_pw}")
+    print(f"{__doc__} - Part 2: {part2(part1_pw)}")
