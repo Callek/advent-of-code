@@ -66,10 +66,21 @@ def part1(people: dict[str, Person]) -> int:
     return max_happy
 
 
+def part2(people: dict[str, Person]) -> int:
+    """Part 2"""
+    for person in people.values():
+        person.desires["myself"] = 0
+    myself = Person()
+    myself.desires = {who2: 0 for who2 in people}
+    people["myself"] = myself
+    # After adding myself, part2 is the same as part1
+    return part1(people)
+
+
 def main() -> None:
     """Main Logic"""
 
     raw_data = Path(inputfile).read_text().strip()
     people = parse_people(raw_data)
     print(f"{__doc__} - Part 1: {part1(people)}")
-    # print(f"{__doc__} - Part 2: {part2(raw_data)}")
+    print(f"{__doc__} - Part 2: {part2(people)}")

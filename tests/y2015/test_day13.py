@@ -22,3 +22,10 @@ def test_part1() -> None:
 
     people = day13.parse_people(TEST_DATA)
     assert 330 == day13.part1(people)
+
+
+def test_part2() -> None:
+    """Test Part 2"""
+
+    people = day13.parse_people(TEST_DATA)
+    assert 286 == day13.part2(people)
