@@ -1,4 +1,4 @@
-"""2015 - Day 13"""
+"""2015 - Day 14"""
 import os
 import re
 from dataclasses import dataclass
@@ -21,6 +21,8 @@ REINDEER_RE = re.compile(
 class Reindeer:
     """A descriptor of a Raindeer"""
 
+    # pylint: disable=too-many-instance-attributes
+
     name: str
 
     # Start flying
@@ -36,6 +38,8 @@ class Reindeer:
     rest: int
 
     total_distance: int = 0
+    # Score used in pt 2
+    score: int = 0
 
     def advance(self, seconds: int = 1) -> None:
         """Advanced this reindeer"""
@@ -101,10 +105,24 @@ def part1(deers: list[Reindeer], seconds: int = 2503) -> int:
     return max(deer.total_distance for deer in deers)
 
 
+def part2(deers: list[Reindeer], seconds: int = 2503) -> int:
+    """Part 2"""
+    for _ in range(seconds):
+        advance_all_reindeer(deers)
+        lead_distance: int = max(deer.total_distance for deer in deers)
+        deers_at_lead = (deer for deer in deers if deer.total_distance == lead_distance)
+        for deer in deers_at_lead:
+            deer.score += 1
+            # print(f"{deer.name} - {deer.total_distance} - {deer.score}")
+    return max(deer.score for deer in deers)
+
+
 def main() -> None:
     """Main Logic"""
 
     raw_data = Path(inputfile).read_text().strip()
-    deer = parse_reindeer(raw_data)
-    print(f"{__doc__} - Part 1: {part1(deer)}")
-    # print(f"{__doc__} - Part 2: {part2(people)}")
+    deers = parse_reindeer(raw_data)
+    print(f"{__doc__} - Part 1: {part1(deers)}")
+    # Reset
+    deers = parse_reindeer(raw_data)
+    print(f"{__doc__} - Part 2: {part2(deers)}")
