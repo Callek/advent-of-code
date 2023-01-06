@@ -81,14 +81,22 @@ def parse_ingredients(raw_text: str) -> list[Ingredient]:
     return ingredients
 
 
-def part1(ingredients: list[Ingredient]) -> int:
-    """Part 1"""
+def calculate_score(
+    ingredients: list[Ingredient], calories_target: int | None = None
+) -> int:
+    """Calculate a score, with an optional calories target"""
     max_prod = 0
     for combination in combinations_with_replacement(ingredients, r=100):
         teaspoons_per_ingredient = Counter(combination)
         combined_result: Counter[str] = Counter()
+        total_cals: int = 0
         for ingredient, spoons in teaspoons_per_ingredient.items():
+            total_cals += spoons * ingredient.calories
+            if calories_target and total_cals > calories_target:
+                continue
             combined_result.update(Counter(**ingredient.all_for_teaspoons(spoons)))
+        if calories_target and total_cals != calories_target:
+            continue
         max_prod = max(
             max_prod,
             # 0 is replaced for anything negative
@@ -97,10 +105,20 @@ def part1(ingredients: list[Ingredient]) -> int:
     return max_prod
 
 
+def part1(ingredients: list[Ingredient]) -> int:
+    """Part 1"""
+    return calculate_score(ingredients)
+
+
+def part2(ingredients: list[Ingredient]) -> int:
+    """Part 2"""
+    return calculate_score(ingredients, calories_target=500)
+
+
 def main() -> None:
     """Main Logic"""
 
     raw_data = Path(inputfile).read_text().strip()
     ingredients = parse_ingredients(raw_data)
     print(f"{__doc__} - Part 1: {part1(ingredients)}")
-    # print(f"{__doc__} - Part 2: {part2(deers)}")
+    print(f"{__doc__} - Part 2: {part2(ingredients)}")

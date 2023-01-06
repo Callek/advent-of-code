@@ -12,3 +12,10 @@ def test_part1() -> None:
 
     ingredients = day15.parse_ingredients(TEST_DATA)
     assert 62842880 == day15.part1(ingredients)
+
+
+def test_part2() -> None:
+    """Test Part 2"""
+
+    ingredients = day15.parse_ingredients(TEST_DATA)
+    assert 57600000 == day15.part2(ingredients)
