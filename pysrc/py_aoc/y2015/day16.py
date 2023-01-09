@@ -104,9 +104,38 @@ def filter_for_part1(aunt: Aunt) -> bool:
         aunt_result: str | None = aunt[mfcsam_key]
         if aunt_result is None:
             continue
-        if not mfcsam_result == int(aunt_result):
+        if not int(aunt_result) == mfcsam_result:
             keep = False
             break
+    return keep
+
+
+def filter_for_part2(aunt: Aunt) -> bool:
+    """Filter function for part 2
+
+    cats and trees > value
+    pomeranians and goldfish < value
+    all other keys == their value"""
+    keep = True
+    for mfcsam_key, mfcsam_result in MFCSAM_RESULTS.items():
+        aunt_result: str | None = aunt[mfcsam_key]
+        if aunt_result is None:
+            continue
+        match mfcsam_key:
+            case "cats" | "trees":
+                # keep > value
+                if int(aunt_result) <= mfcsam_result:
+                    keep = False
+                    break
+            case "pomeranians" | "goldfish":
+                # keep < value
+                if int(aunt_result) >= mfcsam_result:
+                    keep = False
+                    break
+            case _:
+                if not int(aunt_result) == mfcsam_result:
+                    keep = False
+                    break
     return keep
 
 
@@ -116,10 +145,16 @@ def part1(aunts: list[Aunt]) -> str:
     return aunt["id"]
 
 
+def part2(aunts: list[Aunt]) -> str:
+    """Part 2"""
+    aunt = list(filter(filter_for_part2, aunts))[0]
+    return aunt["id"]
+
+
 def main() -> None:
     """Main Logic"""
 
     raw_data = Path(inputfile).read_text().strip()
     aunts = parse_aunt(raw_data)
     print(f"{__doc__} - Part 1: {part1(aunts)}")
-    # print(f"{__doc__} - Part 2: {part2(ingredients)}")
+    print(f"{__doc__} - Part 2: {part2(aunts)}")
