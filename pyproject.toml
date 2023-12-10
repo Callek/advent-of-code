@@ -10,6 +10,23 @@ packages = [
 
 [tool.poetry.scripts]
 aoc = "py_aoc.main:main"
+# 2015
+aoc-2015-1 = "py_aoc.y2015.day1:main"
+aoc-2015-2 = "py_aoc.y2015.day2:main"
+aoc-2015-3 = "py_aoc.y2015.day3:main"
+aoc-2015-4 = "py_aoc.y2015.day4:main"
+aoc-2015-5 = "py_aoc.y2015.day5:main"
+aoc-2015-6 = "py_aoc.y2015.day6:main"
+aoc-2015-7 = "py_aoc.y2015.day7:main"
+aoc-2015-8 = "py_aoc.y2015.day8:main"
+aoc-2015-9 = "py_aoc.y2015.day9:main"
+aoc-2015-10 = "py_aoc.y2015.day10:main"
+aoc-2015-11 = "py_aoc.y2015.day11:main"
+aoc-2015-12 = "py_aoc.y2015.day12:main"
+aoc-2015-13 = "py_aoc.y2015.day13:main"
+aoc-2015-14 = "py_aoc.y2015.day14:main"
+aoc-2015-15 = "py_aoc.y2015.day15:main"
+aoc-2015-16 = "py_aoc.y2015.day16:main"
 # 2020
 aoc-2020-1 = "py_aoc.y2020.day1:main"
 aoc-2020-2 = "py_aoc.y2020.day2:main"
